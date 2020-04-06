@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoya.dao.LeaveDao">
+	<resultMap type="Leave" id="leaveMap">
+		<id column="id" property="id"></id>
+		<result column="name" property="name"></result>
+		<result column="depart" property="depart"></result>
+		<result column="title" property="title"></result>
+		<result column="start" property="start"></result>
+		<result column="end" property="end"></result>
+		<result column="days" property="days"></result>
+		<result column="time" property="time"></result>
+		<result column="type" property="type"></result>
+		<result column="context" property="context"></result>
+		<association property="user" javaType="User">
+			<id column="id" property="id"></id>
+			<result column="name" property="name"></result>
+			<result column="pwd" property="pwd"></result>
+			<result column="days" property="days"></result>
+		</association>
+	</resultMap>
+
+
+	<select id="login" resultType="User">
+		SELECT * from USER where name=#{name} and pwd=#{pwd}
+	</select>
+
+	<select id="list" resultMap="leaveMap">
+		select * from `leave` ORDER BY time
+		DESC
+	</select>
+
+    <select id="look" resultType="Leave">
+        select * from `leave` where id=#{id}
+    </select>
+    
+    <insert id="add">
+       insert into leave set
+		name=#{name},depart=#{depart},title=#{title},start=#{start},end=#{end},days=#{days},time=#{time},type=#{type},context=#{context}
+    </insert>
+</mapper>
